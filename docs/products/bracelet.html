@@ -341,7 +341,39 @@
 <div class="page-data">
 <section class="product-main" id="shop">
 <div class="w-layout-blockcontainer container w-container">
+
 <div class="product-wrap">
+
+<style>
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      padding-top: 56.25%; 
+      margin: 20px auto;
+      overflow: hidden;
+      border-radius: 15px;
+      border: 2px solid #2a2a2a;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: -80px; 
+      left: 0;
+      width: 100%;
+      height: calc(100% + 160px);
+      border: none;
+      pointer-events: none; 
+    }
+  </style>
+<div class="video-wrapper">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/PeehQnxNenw?autoplay=1&mute=1&controls=0&loop=1&playlist=PeehQnxNenw&modestbranding=1&rel=0&playsinline=1"
+    allow="autoplay"
+  ></iframe>
+</div>
+
+<!--
 <div class="product-image-wrap">
 <img data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="imgs/bracelet.png" alt="Product Image" loading="eager" sizes="(max-width: 479px) 92vw, (max-width: 991px) 95vw, 44vw" srcset="imgs/bracelet.png" class="product-main-img"/>
 <a href="#" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22media%22%7D%5D" class="product-plus w-inline-block w-lightbox">
@@ -356,6 +388,7 @@
 }</script>
 </a>
 </div>
+-->
 <div class="product-info">
 <div class="product-info-data">
 <div>
@@ -484,7 +517,9 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
 
 </div>
 </div>
+<hr>
 </section>
+
 <section class="products">
 <div class="w-layout-blockcontainer container w-container">
 <div class="section-title">
