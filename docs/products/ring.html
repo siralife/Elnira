@@ -542,6 +542,13 @@ function handleSwipe(start, end){
   }
 }
 
+	// CLICK OUTSIDE IMAGE TO CLOSE
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = "none";
+  }
+});
+
 </script>
 
 
