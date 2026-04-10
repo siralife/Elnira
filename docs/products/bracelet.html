@@ -996,6 +996,123 @@ Crafted with care and attention to detail, the bracelet is lightweight, stylish,
 <br>
 A perfect gift for birthdays, anniversaries, or just to make someone feel special.</p>
 
+
+
+<div class="video-wrapper">
+
+  <div class="video-gallery">
+    <img src="https://via.placeholder.com/300" onclick="openVideo('uh51mg_5Boo')" />
+    <img src="https://via.placeholder.com/300" onclick="openVideo('uh51mg_5Boo')" />
+    <img src="https://via.placeholder.com/300" onclick="openVideo('uh51mg_5Boo')" />
+  </div>
+
+</div>
+
+<div id="videoModal" class="video-modal" onclick="outsideClick(event)">
+  <span class="close-btn" onclick="closeVideo()">✖</span>
+  <iframe id="videoFrame" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+</div>
+
+<style>
+
+/* CENTER WRAPPER */
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* GALLERY */
+.video-gallery {
+  display: flex;
+  gap: 10px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.video-gallery img {
+  width: calc((100% - 20px)/3);
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.video-gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* FULLSCREEN MODAL */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.96);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.video-modal iframe {
+  width: 90%;
+  height: 80%;
+  border-radius: 12px;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* MOBILE */
+@media(max-width: 768px) {
+  .video-gallery img {
+    height: 120px;
+  }
+
+  .video-modal iframe {
+    width: 95%;
+    height: 60%;
+  }
+}
+
+</style>
+
+<script>
+function openVideo(videoId) {
+  document.getElementById("videoModal").style.display = "flex";
+  
+  document.getElementById("videoFrame").src =
+    "https://www.youtube.com/embed/" + videoId +
+    "?autoplay=1&loop=1&playlist=" + videoId +
+    "&controls=0&modestbranding=1&rel=0&playsinline=1";
+}
+
+function closeVideo() {
+  document.getElementById("videoModal").style.display = "none";
+  document.getElementById("videoFrame").src = "";
+}
+
+// CLICK OUTSIDE TO CLOSE
+function outsideClick(e) {
+  if (e.target.id === "videoModal") {
+    closeVideo();
+  }
+}
+</script>
+
+
+	
 </div>
 </div>
 
