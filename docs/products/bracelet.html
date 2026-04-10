@@ -995,34 +995,34 @@ Simply upload your favorite photo, and we’ll transform it into a beautiful bra
 Crafted with care and attention to detail, the bracelet is lightweight, stylish, and perfect for everyday wear. It’s not just an accessory, it’s a feeling you can wear.
 <br>
 A perfect gift for birthdays, anniversaries, or just to make someone feel special.</p>
-
-
+	
+</div>
 
 <div class="video-wrapper">
 
   <div class="video-gallery">
-    <img src="imgs/n2.jpg" onclick="openVideo('uh51mg_5Boo')" />
-    <img src="imgs/n2.jpg" onclick="openVideo('uh51mg_5Boo')" />
-    <img src="imgs/n2.jpg" onclick="openVideo('uh51mg_5Boo')" />
+    <img src="imgs/n2.jpg" onclick="openShort('uh51mg_5Boo')" />
+    <img src="imgs/n2.jpg" onclick="openShort('uh51mg_5Boo')" />
+    <img src="imgs/n2.jpg" onclick="openShort('uh51mg_5Boo')" />
   </div>
 
 </div>
 
-<div id="videoModal" class="video-modal" onclick="outsideClick(event)">
-  <span class="close-btn" onclick="closeVideo()">✖</span>
-  <iframe id="videoFrame" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+<div id="shortModal" class="video-modal" onclick="outsideClickShort(event)">
+  <span class="close-btn" onclick="closeShort()">✖</span>
+  <iframe id="shortFrame" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>
 </div>
 
 <style>
 
-/* CENTER WRAPPER */
+/* same CSS — no change needed */
+
 .video-wrapper {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-/* GALLERY */
 .video-gallery {
   display: flex;
   gap: 10px;
@@ -1043,7 +1043,6 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   transform: scale(1.05);
 }
 
-/* FULLSCREEN MODAL */
 .video-modal {
   position: fixed;
   top: 0;
@@ -1063,7 +1062,6 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   border-radius: 12px;
 }
 
-/* CLOSE BUTTON */
 .close-btn {
   position: absolute;
   top: 20px;
@@ -1074,7 +1072,6 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   z-index: 10;
 }
 
-/* MOBILE */
 @media(max-width: 768px) {
   .video-gallery img {
     height: 120px;
@@ -1089,31 +1086,27 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
 </style>
 
 <script>
-function openVideo(videoId) {
-  document.getElementById("videoModal").style.display = "flex";
+function openShort(videoId) {
+  document.getElementById("shortModal").style.display = "flex";
   
-  document.getElementById("videoFrame").src =
+  document.getElementById("shortFrame").src =
     "https://www.youtube.com/embed/" + videoId +
     "?autoplay=1&loop=1&playlist=" + videoId +
     "&controls=0&modestbranding=1&rel=0&playsinline=1";
 }
 
-function closeVideo() {
-  document.getElementById("videoModal").style.display = "none";
-  document.getElementById("videoFrame").src = "";
+function closeShort() {
+  document.getElementById("shortModal").style.display = "none";
+  document.getElementById("shortFrame").src = "";
 }
 
-// CLICK OUTSIDE TO CLOSE
-function outsideClick(e) {
-  if (e.target.id === "videoModal") {
-    closeVideo();
+function outsideClickShort(e) {
+  if (e.target.id === "shortModal") {
+    closeShort();
   }
 }
 </script>
-
-
 	
-</div>
 </div>
 
 </div>
