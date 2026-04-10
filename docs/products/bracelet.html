@@ -1072,16 +1072,16 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   z-index: 10;
 }
 
-/* MOBILE */
 @media(max-width: 768px) {
-  .siraShorts-gallery img {
-    height: 120px;
+  .siraShorts-gallery {
+    gap: 8px;
   }
 
-  .siraShorts-modal iframe {
-    width: 95%;
-    height: 60%;
+  .siraShorts-gallery img {
+    width: calc((100% - 16px)/3);
+    aspect-ratio: 9/16;
   }
+}
 }
 
 </style>
