@@ -995,42 +995,40 @@ Simply upload your favorite photo, and we’ll transform it into a beautiful bra
 Crafted with care and attention to detail, the bracelet is lightweight, stylish, and perfect for everyday wear. It’s not just an accessory, it’s a feeling you can wear.
 <br>
 A perfect gift for birthdays, anniversaries, or just to make someone feel special.</p>
-	
-</div>
 
-<div class="video-wrapper">
+	<div class="siraShorts-wrapper">
 
-  <div class="video-gallery">
-    <img src="imgs/n2.jpg" onclick="openShort('uh51mg_5Boo')" />
-    <img src="imgs/n2.jpg" onclick="openShort('uh51mg_5Boo')" />
-    <img src="imgs/n2.jpg" onclick="openShort('uh51mg_5Boo')" />
+  <div class="siraShorts-gallery">
+    <img src="imgs/n2.jpg" onclick="siraOpenShort('uh51mg_5Boo')" />
+    <img src="imgs/n2.jpg" onclick="siraOpenShort('uh51mg_5Boo')" />
+    <img src="imgs/n2.jpg" onclick="siraOpenShort('uh51mg_5Boo')" />
   </div>
 
 </div>
 
-<div id="shortModal" class="video-modal" onclick="outsideClickShort(event)">
-  <span class="close-btn" onclick="closeShort()">✖</span>
-  <iframe id="shortFrame" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+<div id="siraShortsModal" class="siraShorts-modal" onclick="siraOutsideClick(event)">
+  <span class="siraShorts-close" onclick="siraCloseShort()">✖</span>
+  <iframe id="siraShortsFrame" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>
 </div>
 
 <style>
 
-/* same CSS — no change needed */
-
-.video-wrapper {
+/* WRAPPER */
+.siraShorts-wrapper {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.video-gallery {
+/* GALLERY */
+.siraShorts-gallery {
   display: flex;
   gap: 10px;
   max-width: 900px;
   width: 100%;
 }
 
-.video-gallery img {
+.siraShorts-gallery img {
   width: calc((100% - 20px)/3);
   height: 180px;
   object-fit: cover;
@@ -1039,11 +1037,12 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   transition: 0.3s;
 }
 
-.video-gallery img:hover {
+.siraShorts-gallery img:hover {
   transform: scale(1.05);
 }
 
-.video-modal {
+/* MODAL */
+.siraShorts-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -1053,16 +1052,17 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   display: none;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 999999; /* high rakha for safety */
 }
 
-.video-modal iframe {
+.siraShorts-modal iframe {
   width: 90%;
   height: 80%;
   border-radius: 12px;
 }
 
-.close-btn {
+/* CLOSE */
+.siraShorts-close {
   position: absolute;
   top: 20px;
   right: 25px;
@@ -1072,12 +1072,13 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
   z-index: 10;
 }
 
+/* MOBILE */
 @media(max-width: 768px) {
-  .video-gallery img {
+  .siraShorts-gallery img {
     height: 120px;
   }
 
-  .video-modal iframe {
+  .siraShorts-modal iframe {
     width: 95%;
     height: 60%;
   }
@@ -1086,27 +1087,28 @@ A perfect gift for birthdays, anniversaries, or just to make someone feel specia
 </style>
 
 <script>
-function openShort(videoId) {
-  document.getElementById("shortModal").style.display = "flex";
+function siraOpenShort(videoId) {
+  document.getElementById("siraShortsModal").style.display = "flex";
   
-  document.getElementById("shortFrame").src =
+  document.getElementById("siraShortsFrame").src =
     "https://www.youtube.com/embed/" + videoId +
     "?autoplay=1&loop=1&playlist=" + videoId +
     "&controls=0&modestbranding=1&rel=0&playsinline=1";
 }
 
-function closeShort() {
-  document.getElementById("shortModal").style.display = "none";
-  document.getElementById("shortFrame").src = "";
+function siraCloseShort() {
+  document.getElementById("siraShortsModal").style.display = "none";
+  document.getElementById("siraShortsFrame").src = "";
 }
 
-function outsideClickShort(e) {
-  if (e.target.id === "shortModal") {
-    closeShort();
+function siraOutsideClick(e) {
+  if (e.target.id === "siraShortsModal") {
+    siraCloseShort();
   }
 }
 </script>
 	
+</div>
 </div>
 
 </div>
