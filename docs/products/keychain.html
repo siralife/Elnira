@@ -995,6 +995,119 @@ Compact, lightweight, and easy to carry, it fits perfectly with your keys while 
 <br>
 A simple yet unforgettable gift for someone special.</p>
 
+
+	<div class="siraShorts-wrapper">
+
+  <div class="siraShorts-gallery">
+    <img src="imgs/g1.png" onclick="siraOpenShort('bfEWY5SjfRA')" />
+    <img src="imgs/g2.png" onclick="siraOpenShort('f_BFJNkvbM0')" />
+    <img src="imgs/g3.png" onclick="siraOpenShort('9bnvNN8Ci6Q')" />
+  </div>
+
+</div>
+
+<div id="siraShortsModal" class="siraShorts-modal" onclick="siraOutsideClick(event)">
+  <span class="siraShorts-close" onclick="siraCloseShort()">✖</span>
+  <iframe id="siraShortsFrame" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+</div>
+
+<style>
+
+/* WRAPPER */
+.siraShorts-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* GALLERY */
+.siraShorts-gallery {
+  display: flex;
+  gap: 10px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.siraShorts-gallery img {
+  width: calc((100% - 20px)/3);
+  aspect-ratio: 9/16;   /* 🔥 story style */
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.siraShorts-gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* MODAL */
+.siraShorts-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.96);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999; /* high rakha for safety */
+}
+
+.siraShorts-modal iframe {
+  width: 90%;
+  height: 80%;
+  border-radius: 12px;
+}
+
+/* CLOSE */
+.siraShorts-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+@media(max-width: 768px) {
+  .siraShorts-gallery {
+    gap: 8px;
+  }
+
+  .siraShorts-gallery img {
+    width: calc((100% - 16px)/3);
+    aspect-ratio: 9/16;
+  }
+}
+}
+
+</style>
+
+<script>
+function siraOpenShort(videoId) {
+  document.getElementById("siraShortsModal").style.display = "flex";
+  
+  document.getElementById("siraShortsFrame").src =
+    "https://www.youtube.com/embed/" + videoId +
+    "?autoplay=1&loop=1&playlist=" + videoId +
+    "&controls=0&modestbranding=1&rel=0&playsinline=1";
+}
+
+function siraCloseShort() {
+  document.getElementById("siraShortsModal").style.display = "none";
+  document.getElementById("siraShortsFrame").src = "";
+}
+
+function siraOutsideClick(e) {
+  if (e.target.id === "siraShortsModal") {
+    siraCloseShort();
+  }
+}
+</script>
+
 </div>
 </div>
 
