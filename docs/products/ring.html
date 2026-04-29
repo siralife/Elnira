@@ -909,118 +909,195 @@ lightbox.addEventListener("click", (e) => {
 </div>
 <div class="add-to-cart">
 <br><center>
-<!-- Upload Button -->
-<button id="uploadBtn" style="
-  background:#000;
-  color:#fff;
-  padding:12px 20px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:14px;
-">
+<!-- =========================
+     UPLOAD BUTTON
+========================= -->
+<button onclick="document.getElementById('niraImgInput').click()" 
+style="background:#000;color:#fff;border:none;padding:12px 18px;
+border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;">
   Upload Square Photo
 </button>
-</center>
-<!-- Hidden File Input -->
-<input type="file" id="fileInput" accept="image/*" style="display:none;">
 
-<!-- Popup -->
-<div id="popup" style="
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-">
-  <div style="
-    background:#fff;
-    padding:20px;
-    border-radius:12px;
-    text-align:center;
-    width:300px;
-  ">
-    <p>Wohhh, Perfect 😍</p>
-    <!-- Image Box -->
-    <div style="
-      width:200px;
-      height:200px;
-      margin:0 auto 15px;
-      padding:8px;
-      border:2px solid #ddd;
-      border-radius:10px;
-      box-sizing:border-box;
-    ">
-    
+<input type="file" id="niraImgInput" accept="image/*" 
+style="display:none;" onchange="niraHandleImage(event)">
 
-      <img id="previewImg" src="" style="
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        border-radius:6px;
-      ">
+
+
+<!-- =============================================
+     NIRA CHECKOUT POPUP — PASTE BEFORE </body>
+============================================= -->
+
+<div id="niraOverlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;align-items:flex-end;justify-content:center;">
+  <div id="niraPopup" style="background:#fff;width:100%;max-width:480px;border-radius:16px 16px 0 0;overflow:hidden;display:flex;flex-direction:column;max-height:95vh;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);">
+
+    <!-- Header -->
+    <div style="background:#fff;border-bottom:1px solid #efefef;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+      <button onclick="niraClose()" style="width:36px;height:36px;border:none;background:#f2f2f2;border-radius:50%;cursor:pointer;">
+        ←
+      </button>
+      <div style="flex:1;text-align:center;font-weight:600;">Checkout Details</div>
     </div>
 
-    <!-- Proceed Button -->
-    <button onclick="goCheckout()" style="
-      background:#000;
-      color:#fff;
-      padding:10px 15px;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      width:100%;
-    ">
-      Proceed To Checkout
-    </button>
+    <!-- Delivery Fee -->
+    <div style="background:#f9f9f9;padding:10px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #efefef;">
+      <span style="font-size:13px;color:#888;">Total Payable</span>
+      <span style="font-weight:600;">₹199</span>
+    </div>
+
+    <!-- Body -->
+    <div style="flex:1;overflow-y:auto;padding:16px;">
+
+      <!-- IMAGE PREVIEW -->
+<div id="niraImgBox" style="display:none;margin-bottom:14px;display:flex;justify-content:center;">
+      
+        <div style="width:30%;aspect-ratio:1/1;border:1px dashed #ddd;border-radius:10px;padding:6px;">
+          <img id="niraPreviewImg" src="" 
+          style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
+      <p style="font-size:12px;font-weight:600;color:#888;margin-bottom:10px;">Looks Perfect 😍</p>
+		</div>
+
+</div>
+      <p style="font-size:12px;font-weight:600;color:#888;margin-bottom:10px;">Delivery Details</p>
+
+
+
+      <!-- Phone -->
+      <input id="niraPhone" placeholder="Phone Number" maxlength="10" oninput="niraValidate()" style="width:100%;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+
+      <!-- Email -->
+      <input id="niraEmail" placeholder="Email" oninput="niraValidate()" style="width:100%;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+
+      <!-- Name -->
+      <input id="niraName" placeholder="Full Name" oninput="niraValidate()" style="width:100%;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+
+      <!-- Address -->
+      <input id="niraAddr1" placeholder="Address Line 1" oninput="niraValidate()" style="width:100%;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+      <input id="niraAddr2" placeholder="Address Line 2" oninput="niraValidate()" style="width:100%;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+      <input id="niraPin" placeholder="Pincode" maxlength="6" oninput="niraValidate()" style="width:100%;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:16px;border-top:1px solid #eee;">
+      <button id="niraPayBtn" disabled onclick="niraPay()" 
+      style="width:100%;background:#ccc;color:#fff;border:none;padding:14px;border-radius:8px;font-weight:600;">
+        Pay Now
+      </button>
+<div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:10px;flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          100% Secure
+        </span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Verified Seller
+        </span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Fast Delivery
+        </span>
+      </div>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;align-items:center;">
+<img src="imgs/paystrip.png" width="70%" height="auto">
+      </div>
+      <div style="font-size:10px;color:#aaa;text-align:center;margin-top:8px;line-height:1.4;">By proceeding, you agree to our <a href="../tnc.html">Terms</a> &amp; <a href="../pp.html">Privacy Policy.</a></div>
+    </div>
+
+
+
+		
+    </div>
 
   </div>
 </div>
 
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
 <script>
-  const uploadBtn = document.getElementById("uploadBtn");
-  const fileInput = document.getElementById("fileInput");
-  const popup = document.getElementById("popup");
-  const previewImg = document.getElementById("previewImg");
 
-  // Open file selector
-  uploadBtn.onclick = () => fileInput.click();
-
-  // Handle image select
-  fileInput.onchange = function() {
-    const file = this.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        previewImg.src = e.target.result;
-
-        popup.style.display = "flex";
-
-        // Push history state for back button close
-        history.pushState({popup: true}, "");
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Only image files allowed");
-    }
-  };
-
-  // Back button se popup close
-  window.onpopstate = function(event) {
-    if (popup.style.display === "flex") {
-      popup.style.display = "none";
-    }
-  };
-
-  // Redirect function
-  function goCheckout() {
-    window.location.href = "http://nirapay.kesug.com/ccpay.php";
+// IMAGE HANDLE
+function niraHandleImage(event) {
+  var file = event.target.files[0];
+  if (!file || !file.type.startsWith('image/')) {
+    alert("Select valid image");
+    return;
   }
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('niraPreviewImg').src = e.target.result;
+    document.getElementById('niraImgBox').style.display = 'block';
+    niraOpen();
+  };
+  reader.readAsDataURL(file);
+}
+
+
+// OPEN POPUP
+function niraOpen() {
+  var overlay = document.getElementById('niraOverlay');
+  var popup = document.getElementById('niraPopup');
+
+  history.pushState({ popup: true }, "");
+
+  overlay.style.display = 'flex';
+
+  setTimeout(function() {
+    popup.style.transform = 'translateY(0)';
+  }, 10);
+
+  document.body.style.overflow = 'hidden';
+}
+
+
+// CLOSE POPUP
+function niraClose() {
+  var popup = document.getElementById('niraPopup');
+  var overlay = document.getElementById('niraOverlay');
+
+  popup.style.transform = 'translateY(100%)';
+
+  setTimeout(function() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+
+// BACK BUTTON
+window.addEventListener("popstate", function () {
+  var overlay = document.getElementById('niraOverlay');
+  if (overlay.style.display === 'flex') {
+    niraClose();
+  }
+});
+
+
+// VALIDATION
+function niraValidate() {
+  var phone = niraPhone.value.trim();
+  var email = niraEmail.value.trim();
+  var name = niraName.value.trim();
+  var addr1 = niraAddr1.value.trim();
+  var addr2 = niraAddr2.value.trim();
+  var pin = niraPin.value.trim();
+
+  var ok = phone.length==10 && email.includes("@") && name && addr1 && addr2 && pin.length==6;
+
+  var btn = document.getElementById('niraPayBtn');
+  btn.disabled = !ok;
+  btn.style.background = ok ? "#000" : "#ccc";
+}
+
+
+// PAY
+function niraPay() {
+  window.location.href = "https://nira.wuaze.com/elnira/pay.php";
+}
+
 </script>
 <br>	<div style="
   border-left: 4px solid #111;
