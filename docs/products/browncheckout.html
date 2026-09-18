@@ -373,6 +373,203 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
           </div>
           <div class="summary-price">₹150</div>
         </div>
+        <style>
+  :root{
+    --gold:#e8b64a;
+    --ink:#241a12;
+    --card-bg:#2c2118;
+  }
+  *{box-sizing:border-box;}
+  .scratch-wrap{
+    width:min(250px, 92vw);
+    aspect-ratio: 10 / 5;
+    position:relative;
+    border-radius:22px;
+    overflow:hidden;
+     background:var(--card-bg);
+
+  }
+  .prize-layer{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .prize-layer img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  
+  canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    cursor:grab;
+    touch-action:none;
+  }
+  .hint{
+    text-align:center;
+    color:#9b8f80;
+    font-size:13px;
+    margin-top:14px;
+  }
+  .reset-btn{
+    display:block;
+    margin:14px auto 0;
+    background:var(--gold);
+    color:var(--ink);
+    border:none;
+    padding:9px 20px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .reset-btn:hover{ filter:brightness(1.05); }
+</style>
+<center>
+  <h1>+</h1>
+  <div>
+    <div class="scratch-wrap" id="wrap">
+      <div class="prize-layer" id="prizeLayer">
+        <img id="prizeImg" alt="Gift reveal">
+        <div class="prize-label" id="prizeLabel"></div>
+      </div>
+      <canvas id="scratchCanvas"></canvas>
+    </div>
+    <div class="hint" style="display: none;">Ungli ya mouse se ghis kar gift dekho</div>
+    <button class="reset-btn" id="resetBtn" style="display: none;">Naya Scratch Card</button>
+  </div>
+</center>
+<script>
+// ---- 5 possible reveal images (random one per load) ----
+const GIFTS = [
+  { url: "imgs/perfume.png", label: "" },
+  { url: "imgs/kada.png", label: "" },
+  { url: "imgs/chain.png", label: "" },
+  { url: "imgs/keychain.png", label: "" },
+  { url: "imgs/attar.png", label: "" }
+];
+
+const prizeImg   = document.getElementById('prizeImg');
+const prizeLabel = document.getElementById('prizeLabel');
+const wrap       = document.getElementById('wrap');
+const canvas     = document.getElementById('scratchCanvas');
+const ctx        = canvas.getContext('2d');
+const resetBtn   = document.getElementById('resetBtn');
+
+let isDrawing = false;
+let cleared = false;
+
+function pickRandomGift(){
+  const gift = GIFTS[Math.floor(Math.random() * GIFTS.length)];
+  prizeImg.src = gift.url;
+  prizeImg.onerror = () => {
+    // fallback so card never looks broken if image host fails
+    prizeImg.style.display = 'none';
+    prizeLayer_setFallback(gift);
+  };
+  prizeLabel.textContent = gift.label;
+}
+
+function prizeLayer_setFallback(gift){
+  const layer = document.getElementById('prizeLayer');
+  const colors = ['#e8b64a','#d97757','#7fae8f','#6a8caf','#b988c9'];
+  const c = colors[Math.floor(Math.random()*colors.length)];
+  layer.style.background = `linear-gradient(135deg, ${c}, #241a12)`;
+}
+
+function sizeCanvas(){
+  const rect = wrap.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  drawScratchLayer();
+}
+
+function drawScratchLayer(){
+  ctx.globalCompositeOperation = 'source-over';
+  const grad = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  grad.addColorStop(0, '#b8b8b8');
+  grad.addColorStop(1, '#8a8a8a');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = '#3a3a3a';
+  ctx.font = `600 ${Math.max(18, canvas.width*0.055)}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Scratch For Gift', canvas.width/2, canvas.height/2);
+  cleared = false;
+}
+
+function getPos(e){
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+
+function scratch(e){
+  const { x, y } = getPos(e);
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath();
+  ctx.arc(x, y, Math.max(18, canvas.width*0.045), 0, Math.PI*2);
+  ctx.fill();
+  checkClearedEnough();
+}
+
+function checkClearedEnough(){
+  if (cleared) return;
+  const data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  let transparent = 0;
+  const step = 40; // sample for performance
+  let total = 0;
+  for (let i = 3; i < data.length; i += 4*step){
+    total++;
+    if (data[i] === 0) transparent++;
+  }
+  if (transparent / total > 0.6){
+    cleared = true;
+    fadeOutCanvas();
+  }
+}
+
+function fadeOutCanvas(){
+  canvas.style.transition = 'opacity .5s ease';
+  canvas.style.opacity = '0';
+  setTimeout(()=>{ canvas.style.pointerEvents = 'none'; }, 500);
+}
+
+function startDraw(e){ isDrawing = true; scratch(e); e.preventDefault(); }
+function moveDraw(e){ if(isDrawing) scratch(e); e.preventDefault(); }
+function endDraw(){ isDrawing = false; }
+
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', moveDraw);
+window.addEventListener('mouseup', endDraw);
+canvas.addEventListener('touchstart', startDraw, {passive:false});
+canvas.addEventListener('touchmove', moveDraw, {passive:false});
+canvas.addEventListener('touchend', endDraw);
+
+resetBtn.addEventListener('click', () => {
+  canvas.style.transition = 'none';
+  canvas.style.opacity = '1';
+  canvas.style.pointerEvents = 'auto';
+  pickRandomGift();
+  sizeCanvas();
+});
+
+window.addEventListener('resize', sizeCanvas);
+
+pickRandomGift();
+sizeCanvas();
+</script>
+<br>
+
 <hr>
 <br>
 <div style="width:100%; box-sizing:border-box; padding:0 20px;">
