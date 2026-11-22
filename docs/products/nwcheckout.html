@@ -655,7 +655,7 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       type="text"
       required
       autocomplete="name"
-      placeholder="Aarav Sharma"
+
     >
   </div>
 
@@ -674,7 +674,7 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       type="email"
       required
       autocomplete="email"
-      placeholder="you@example.com"
+
     >
   </div>
 
@@ -695,7 +695,6 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       maxlength="10"
       required
       autocomplete="tel"
-      placeholder="9876543210"
     >
   </div>
 
@@ -714,7 +713,7 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       type="text"
       required
       autocomplete="street-address"
-      placeholder="House No., Street, Area"
+
     >
   </div>
 
@@ -735,7 +734,6 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       maxlength="6"
       required
       autocomplete="postal-code"
-      placeholder="411001"
     >
 
     <span id="pincodeStatus" class="pincode-status"></span>
@@ -756,7 +754,7 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       type="text"
       required
       autocomplete="address-level2"
-      placeholder="City"
+     
     >
   </div>
 
@@ -775,7 +773,7 @@ src="https://www.facebook.com/tr?id=2810804292590349&ev=PageView&noscript=1"
       type="text"
       required
       autocomplete="address-level1"
-      placeholder="State"
+     
     >
   </div>
 
@@ -916,7 +914,7 @@ document.addEventListener("DOMContentLoaded", function () {
         city.value = "";
         state.value = "";
 
-        pincodeStatus.textContent = "Invalid pincode.";
+        pincodeStatus.textContent = "Enter city/state manually.";
       }
 
     } catch (error) {
