@@ -1390,7 +1390,46 @@ lightbox.addEventListener("click", (e) => {
 
 </script>
 
+<script>
+(function(){
 
+    const popup = document.getElementById("lightbox");
+    let popupHistory = false;
+
+    const observer = new MutationObserver(function(){
+
+        if(popup.style.display === "flex"){
+
+            if(!popupHistory){
+                history.pushState({galleryPopup:true}, "", location.href);
+                popupHistory = true;
+            }
+
+        }else if(popupHistory){
+
+            popupHistory = false;
+            history.back();
+
+        }
+
+    });
+
+    observer.observe(popup, {
+        attributes:true,
+        attributeFilter:["style"]
+    });
+
+    window.addEventListener("popstate", function(){
+
+        if(popupHistory){
+            popupHistory = false;
+            popup.style.display = "none";
+        }
+
+    });
+
+})();
+</script>
 </div>
 
 
