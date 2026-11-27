@@ -1392,7 +1392,46 @@ lightbox.addEventListener("click", (e) => {
 
 </script>
 
+<script>
+(function(){
 
+    const popup = document.getElementById("lightbox");
+    let popupHistory = false;
+
+    const observer = new MutationObserver(function(){
+
+        if(popup.style.display === "flex"){
+
+            if(!popupHistory){
+                history.pushState({galleryPopup:true}, "", location.href);
+                popupHistory = true;
+            }
+
+        }else if(popupHistory){
+
+            popupHistory = false;
+            history.back();
+
+        }
+
+    });
+
+    observer.observe(popup, {
+        attributes:true,
+        attributeFilter:["style"]
+    });
+
+    window.addEventListener("popstate", function(){
+
+        if(popupHistory){
+            popupHistory = false;
+            popup.style.display = "none";
+        }
+
+    });
+
+})();
+</script>
 </div>
 
 
@@ -1400,7 +1439,7 @@ lightbox.addEventListener("click", (e) => {
 <div class="product-info">
 <div class="product-info-data">
 <div>
-<h2 class="product-title">Customized Name Wallet<span style="font-size:16px;"> Faux Leather</span></h2>
+<h2 class="product-title">Customized Wallet<span style="font-size:16px;"> Faux Leather</span></h2>
 <div class="price-wrap">
 <div data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_price_%22%2C%22to%22%3A%22innerHTML%22%7D%5D"><del>₹ 500/-</del> ₹ 170</div>
 	<div data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_compare_at_price_7dr10dr%22%2C%22to%22%3A%22innerHTML%22%7D%5D" class="compare-price w-dyn-bind-empty">
