@@ -1851,6 +1851,47 @@ lightbox874521.classList.remove("active");
 
 </script>
 
+<script>
+(function(){
+
+    const popup = document.getElementById("elniraLightbox874521");
+    let popupHistory = false;
+
+    const observer = new MutationObserver(function(){
+
+        if(popup.classList.contains("active")){
+
+            if(!popupHistory){
+                history.pushState({galleryPopup:true}, "", location.href);
+                popupHistory = true;
+            }
+
+        }else if(popupHistory){
+
+            popupHistory = false;
+            history.back();
+
+        }
+
+    });
+
+    observer.observe(popup, {
+        attributes:true,
+        attributeFilter:["class"]
+    });
+
+    window.addEventListener("popstate", function(){
+
+        if(popupHistory){
+            popupHistory = false;
+            popup.classList.remove("active");
+        }
+
+    });
+
+})();
+</script>
+	
 </div>
 
 </section>
